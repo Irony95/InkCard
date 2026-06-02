@@ -5,7 +5,7 @@
 #include <BLEServer.h>
 
 #include <SPI.h>
-#include "epd4in2_V2.h"
+#include "epd4in26.h"
 
 #define BTN_1 22
 #define BTN_2 21
@@ -53,7 +53,7 @@ void IRAM_ATTR btn2Interrupt()
 u_int imageSize = 0;
 u_int receivedByteCount = 0;
 //max image buffer, with 4 color grayscale
-uint8_t imageBuffer[EPD_WIDTH*EPD_HEIGHT/4] = {0};
+// uint8_t imageBuffer[4] = {0};
 
 void getStatusBytes(float voltage, bool btn1, bool btn2, uint8_t *statusByte);
 float readVcc();
@@ -68,11 +68,13 @@ class MyCallbacks: public BLECharacteristicCallbacks {
       {        
         memcpy(&imageSize, arr, arrLen);        
         Serial.println("receiving start");
+        epd.SendCommand(0x24);
       }
       else if (receivedByteCount < imageSize)
-      {
-        memcpy((imageBuffer+receivedByteCount), arr, arrLen);
-        receivedByteCount += arrLen;                
+      {        
+        for (int i = 0;i < arrLen;i++)
+        { epd.SendData(arr[i]); }
+        receivedByteCount += arrLen;
       }
     }
 };
@@ -180,14 +182,8 @@ void loop()
   //received all the bytes for the image
   if (imageSize != 0 && receivedByteCount >= imageSize)
   {
-    Serial.println("sending data!");
-    
-    epd.SendCommand(0x24);    
-    for (int i = 0;i < imageSize;i++)
-    {      
-      epd.SendData(imageBuffer[i]);    
-    }
-    epd.TurnOnDisplay();
+    Serial.println("refreshing");
+    epd.TurnOnDisplay_Part();
 
     receivedByteCount = 0;
     imageSize = 0;
