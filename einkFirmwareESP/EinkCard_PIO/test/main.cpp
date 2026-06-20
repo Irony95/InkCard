@@ -10,9 +10,6 @@
 #define BTN_1 22
 #define BTN_2 21
 
-#define COMMS_CHUNK_SIZE 511
-#define COMMS_OK 0xFF
-
 // BLE Device Name
 #define SERVER_NAME "Eink Card"
 
@@ -38,44 +35,63 @@ Epd epd;
 
 void IRAM_ATTR btn1Interrupt()
 { 
-  if ( millis() - lastIntr < 100) { return; }
+  if ( millis() - lastIntr < 500) { return; }
   btn1Pressed = true;
   lastIntr = millis();
 }
 
 void IRAM_ATTR btn2Interrupt()
 {
-  if ( millis() - lastIntr < 100) { return; }
+  if ( millis() - lastIntr < 500) { return; }
   btn2Pressed = true;
   lastIntr = millis();
 }
+enum ImageUpdateType {
+  NONE = 0,
+  BLACK_WHITE_FAST = 1,
+  BLACK_WHITE = 2,
+  FOUR_GRAY_FAST = 3,
+  FOUR_GRAY = 4,
+};
 
-u_int imageSize = 0;
-u_int receivedByteCount = 0;
-//max image buffer, with 4 color grayscale
-// uint8_t imageBuffer[4] = {0};
-
-void getStatusBytes(float voltage, bool btn1, bool btn2, uint8_t *statusByte);
-float readVcc();
+enum ImageUpdateType imageUpdating = NONE;
+u_int imageBytesToSend = 0;
 void setupBLE();
 
-class MyCallbacks: public BLECharacteristicCallbacks {
+class ImageCharCallback: public BLECharacteristicCallbacks {
     void onWrite(BLECharacteristic *pCharacteristic, esp_ble_gatts_cb_param_t* param) {      
       uint8_t *arr = pCharacteristic->getData();
       int arrLen = pCharacteristic->getLength();      
-      //received size of image
-      if (imageSize == 0)
-      {        
-        memcpy(&imageSize, arr, arrLen);        
-        Serial.println("receiving start");
-        epd.SendCommand(0x24);
+
+      //receiving new image
+      if (imageUpdating == NONE)
+      {     
+        imageUpdating = (ImageUpdateType)arr[0];
+        switch (imageUpdating)
+        {
+        case BLACK_WHITE_FAST:
+          imageBytesToSend = (EPD_HEIGHT * EPD_WIDTH)/8;
+          epd.SendCommand(0x24);
+        case BLACK_WHITE:
+          imageBytesToSend = (EPD_HEIGHT * EPD_WIDTH)/8;         
+          epd.SendCommand(0x24);
+          break;
+
+        case FOUR_GRAY_FAST:
+          break;
+        case FOUR_GRAY:          
+          break;
+        
+        default:
+          break;
+        }
       }
-      else if (receivedByteCount < imageSize)
-      {        
+      else 
+      {
         for (int i = 0;i < arrLen;i++)
         { epd.SendData(arr[i]); }
-        receivedByteCount += arrLen;
-      }
+        imageBytesToSend -= arrLen;        
+      }      
     }
 };
 
@@ -107,9 +123,9 @@ void setupBLE() {
   BLEService *service = bleServer->createService(SERVICE_UUID);
   bleImage = service->createCharacteristic(
     IMAGE_UUID,
-    BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE);
-  bleImage->setCallbacks(new MyCallbacks());  
-  bleImage->setValue("test");  
+    BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE
+  );
+  bleImage->setCallbacks(new ImageCharCallback());
 
   bleButton1 = service->createCharacteristic(
     BTN1_UUID,
@@ -143,15 +159,6 @@ void setup()
   }
   epd.Clear();  
 
-  epd.SendCommand(0x24);
-  for (int i = 0;i < 480*100;i++)
-  {
-    epd.SendData(0xF0);
-  }
-  epd.TurnOnDisplay();
-
-
-
   setupBLE();
   Serial.println("all ok!");
 }
@@ -179,14 +186,28 @@ void loop()
     bleButton2->notify();
   }  
 
+
   //received all the bytes for the image
-  if (imageSize != 0 && receivedByteCount >= imageSize)
+  if (imageBytesToSend == 0 && imageUpdating != NONE)
   {
     Serial.println("refreshing");
-    epd.TurnOnDisplay_Part();
-
-    receivedByteCount = 0;
-    imageSize = 0;
+    switch (imageUpdating)
+    {
+    case BLACK_WHITE_FAST:
+    Serial.println("BW FAST");
+      imageUpdating = NONE;
+      epd.TurnOnDisplay_Part();
+      break;
+      
+    case BLACK_WHITE:
+      Serial.println("BW");
+      imageUpdating = NONE;
+      epd.TurnOnDisplay(); 
+      break;
+    
+    default:
+      break;
+    }
   }
   delay(50);
 }

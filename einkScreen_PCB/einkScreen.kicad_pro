@@ -550,6 +550,9 @@
     "netclass_assignments": {
       "Net-(D5-A)": [
         "Power"
+      ],
+      "Net-(Q4-S)": [
+        "Power"
       ]
     },
     "netclass_patterns": [

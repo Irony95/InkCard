@@ -6570,6 +6570,12 @@
 		(uuid "1d5a03bb-a763-4a2a-875b-7c0ea67587b3")
 	)
 	(junction
+		(at 165.1 22.86)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "205dfd09-26a5-457f-9769-090becd0fa31")
+	)
+	(junction
 		(at 27.94 26.67)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6876,12 +6882,6 @@
 		(uuid "bdf84238-9c0f-4c26-9c81-6eae455d1f2e")
 	)
 	(junction
-		(at 81.28 77.47)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "c07c91e4-847d-4563-a28b-641086c6b86c")
-	)
-	(junction
 		(at 191.77 107.95)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6892,12 +6892,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "c9223320-3408-48c2-974a-edc70bedd522")
-	)
-	(junction
-		(at 165.1 22.86)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "ce204d13-6f5d-4cc2-ad6e-c251deaf9bf9")
 	)
 	(junction
 		(at 43.18 142.24)
@@ -8159,6 +8153,16 @@
 	)
 	(wire
 		(pts
+			(xy 19.05 137.16) (xy 19.05 138.43)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "50d4f7b4-688d-4e10-bd96-f1920b8085c7")
+	)
+	(wire
+		(pts
 			(xy 201.93 57.15) (xy 201.93 50.8)
 		)
 		(stroke
@@ -8239,7 +8243,7 @@
 	)
 	(wire
 		(pts
-			(xy 165.1 22.86) (xy 168.91 22.86)
+			(xy 165.1 22.86) (xy 167.64 22.86)
 		)
 		(stroke
 			(width 0)
@@ -8699,16 +8703,6 @@
 	)
 	(wire
 		(pts
-			(xy 19.05 137.16) (xy 19.05 138.43)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "74d19a4e-ec4e-4d65-be75-e6a23b76750d")
-	)
-	(wire
-		(pts
 			(xy 243.84 147.32) (xy 259.08 147.32)
 		)
 		(stroke
@@ -8796,6 +8790,16 @@
 			(type default)
 		)
 		(uuid "7c2afa96-7ac9-49e2-826d-a6357170d69a")
+	)
+	(wire
+		(pts
+			(xy 175.26 22.86) (xy 176.53 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7c3dabe6-a77a-439e-bdb6-d166046e0b26")
 	)
 	(wire
 		(pts
@@ -9289,16 +9293,6 @@
 	)
 	(wire
 		(pts
-			(xy 77.47 77.47) (xy 81.28 77.47)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "aeea5eae-03ef-4bb7-b8c7-9469debc1ac3")
-	)
-	(wire
-		(pts
 			(xy 142.24 33.02) (xy 143.51 33.02)
 		)
 		(stroke
@@ -9366,6 +9360,16 @@
 			(type default)
 		)
 		(uuid "b4e71913-4fda-4200-a909-e7d53ba8119a")
+	)
+	(wire
+		(pts
+			(xy 19.05 146.05) (xy 19.05 154.94)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b6a2fbd0-4925-4196-b59f-6efd10509eed")
 	)
 	(wire
 		(pts
@@ -9466,16 +9470,6 @@
 			(type default)
 		)
 		(uuid "bb34ff6d-9405-48ef-9ed0-0e4f447ef877")
-	)
-	(wire
-		(pts
-			(xy 19.05 146.05) (xy 19.05 154.94)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bd5a821c-ae54-448a-9ce2-4a0d6328201f")
 	)
 	(wire
 		(pts
@@ -10942,6 +10936,40 @@
 		)
 		(property "Component Class" ""
 			(at -45.72 7.62 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+			)
+		)
+	)
+	(netclass_flag ""
+		(length 2.54)
+		(shape round)
+		(at 96.52 64.77 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "5690726e-3e56-4ce9-99f7-ea8ca3301d5e")
+		(property "Net Class" "Power"
+			(at 94.234 65.786 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Component Class" ""
+			(at -104.14 49.53 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -15563,7 +15591,7 @@
 	)
 	(symbol
 		(lib_id "Device:D_Schottky")
-		(at 172.72 22.86 180)
+		(at 171.45 22.86 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -15574,7 +15602,7 @@
 		(fields_autoplaced yes)
 		(uuid "464683d4-5d1c-4473-a7ac-1e026d9e1e92")
 		(property "Reference" "D5"
-			(at 173.0375 16.51 0)
+			(at 171.7675 16.51 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -15584,7 +15612,7 @@
 			)
 		)
 		(property "Value" "1N5819"
-			(at 173.0375 19.05 0)
+			(at 171.7675 19.05 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -15594,7 +15622,7 @@
 			)
 		)
 		(property "Footprint" "Diode_SMD:D_SOD-123"
-			(at 172.72 22.86 0)
+			(at 171.45 22.86 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15605,7 +15633,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 172.72 22.86 0)
+			(at 171.45 22.86 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15616,7 +15644,7 @@
 			)
 		)
 		(property "Description" "Schottky diode"
-			(at 172.72 22.86 0)
+			(at 171.45 22.86 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15627,7 +15655,7 @@
 			)
 		)
 		(property "PARTREV" ""
-			(at 172.72 22.86 0)
+			(at 171.45 22.86 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15638,7 +15666,7 @@
 			)
 		)
 		(property "STANDARD" ""
-			(at 172.72 22.86 0)
+			(at 171.45 22.86 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15649,7 +15677,7 @@
 			)
 		)
 		(property "Sim.Type" ""
-			(at 172.72 22.86 0)
+			(at 171.45 22.86 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15660,7 +15688,7 @@
 			)
 		)
 		(property "LCSC" "C82544"
-			(at 172.72 22.86 0)
+			(at 171.45 22.86 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -23074,7 +23102,7 @@
 	)
 	(symbol
 		(lib_id "Device:LED")
-		(at 19.05 142.24 270)
+		(at 19.05 142.24 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -23084,7 +23112,7 @@
 		(dnp no)
 		(uuid "e5a5ad84-f514-4aa2-accd-43dbe1b6cd52")
 		(property "Reference" "D4"
-			(at 20.828 143.51 90)
+			(at 17.272 140.97 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -23095,7 +23123,7 @@
 			)
 		)
 		(property "Value" "LED"
-			(at 20.828 140.97 90)
+			(at 17.272 143.51 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
