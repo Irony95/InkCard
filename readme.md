@@ -15,6 +15,11 @@ Any suggestions and support is greatly welcomed.
 2. Bridge both JP1 and JP3 from the middle to pad 3, these help select options for the e-paper driver
 3. Adjust/remake the CoilLifter.stl to fit your receiver coil size
 
+### Glam Pics!
+<img width="300" height="400" alt="20260623_204243" src="https://github.com/user-attachments/assets/4c539da4-4e6c-44f8-81ce-337a9e7b2b59" />
+<img width="300" height="400" alt="20260623_204849" src="https://github.com/user-attachments/assets/ec206218-819d-4f36-910e-5acee13e4678" />
+<img width="300" height="400" alt="20260623_204540" src="https://github.com/user-attachments/assets/439afda1-7e87-483d-b1d0-fb65de14b53d" />
+
 
 
 ### Future 
