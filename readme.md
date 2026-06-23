@@ -1,0 +1,22 @@
+# Introduction
+An e-ink display card that mirrors your phone screen, to help with reading documents, e-books, web pages etc!
+The project is made to be as cheap as possible, coming to a total cost of around $35USD for materials. This would be even lower if made/bought in bulk!
+As this is a prototype and in heavy development, I would not recommend making this unless you're willing to tinker/is familiar with electronics and or app dev.
+Nevertheless, If you do want to make the project you are free to do so! I am open to answering any questions should you make the card.
+I am also open to the idea of making and selling the hardware itself, though this comes down to if there is interest in the project and when I feel the quality is good enough.
+
+Currently, there is only support for an android app. Check out the repo [here](https://github.com/Irony95/InkCard-androidApp).
+I have no experience in IOS development, so I am entirely unsure if an app can even be made for the IOS system. If it is, do let me know!
+
+Any suggestions and support is greatly welcomed.
+
+### Notes when building
+1. Use a 11uH receiver coil and connect to AC1 and AC2. feel free to use a different coil if you so wish, with C32-C34 and C15 for tuning. refer to BQ51013 datasheet for more info
+2. Bridge both JP1 and JP3 from the middle to pad 3, these help select options for the e-paper driver
+3. Adjust/remake the CoilLifter.stl to fit your receiver coil size
+
+
+
+### Future 
+Although the project was primarily built to be as cheap as possible so to allow anybody to get an e-reader, a future version with touch screen and battery is being considered! This version would likely add significant amounts to the cost, but would likely make the project infinitely better. 
+Additional features like auto/partial screen refreshes, manual cropping, custom button functions are also being considered.

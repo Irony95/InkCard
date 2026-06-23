@@ -1,0 +1,3 @@
+[submodule "androidApp"]
+	path = androidApp
+	url = https://github.com/Irony95/InkCard-androidApp.git

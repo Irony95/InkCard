@@ -22273,7 +22273,7 @@
 		(dnp no)
 		(uuid "dd7409fb-1baa-41b0-9de9-ecc5a3022244")
 		(property "Reference" "TP2"
-			(at 34.544 35.052 90)
+			(at 34.29 41.656 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -22284,7 +22284,7 @@
 			)
 		)
 		(property "Value" "AC2"
-			(at 34.544 32.512 90)
+			(at 34.29 39.116 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
