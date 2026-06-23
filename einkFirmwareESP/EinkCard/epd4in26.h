@@ -42,7 +42,7 @@ public:
     int Init_4GRAY(void);
 
     int Set_Fast(void);
-    int Set4Gray(void);
+    void Set_4Gray(void);
 
     void SetWindows(unsigned long Xstart, unsigned long Ystart, unsigned long Xend, unsigned long Yend);
     void SetCursor(unsigned long Xstart, unsigned long Ystart);

@@ -22,6 +22,9 @@
 #define BTN1_UUID "f78ebbff-c8b7-4107-93de-889a6a06d408"
 #define BTN2_UUID "ca73b3ba-39f6-4ab3-91ae-186dc9577d99"
 
+#define WIDTH_UUID "27440532-c615-4a43-bbba-2e0ee40327c2"
+#define HEIGHT_UUID "12e9f06a-9c60-4430-bf43-8da3603fa765"
+
 #define COMM_TIMEOUT 2000
 
 
@@ -30,6 +33,10 @@ BLEServer *bleServer;
 BLECharacteristic *bleImage;
 BLECharacteristic *bleButton1;
 BLECharacteristic *bleButton2;
+
+BLECharacteristic *widthChar;
+BLECharacteristic *heightChar;
+
 bool btn1Pressed = false, btn2Pressed = false;
 int lastIntr = 0;
 bool deviceConnected = false;
@@ -55,8 +62,9 @@ enum ImageUpdateType {
   NONE = 0,
   BLACK_WHITE_FAST = 1,
   BLACK_WHITE = 2,
-  FOUR_GRAY_FAST = 3,
-  FOUR_GRAY = 4,
+  FOUR_GRAY_REG_ONE = 3,
+  FOUR_GRAY_REG_TWO = 4,
+  PARTIAL = 5,
 };
 
 enum ImageUpdateType imageUpdating = NONE;
@@ -69,27 +77,31 @@ class ImageCharCallback: public BLECharacteristicCallbacks {
       int arrLen = pCharacteristic->getLength();            
 
       //receiving new image
-      if (imageUpdating == NONE)
+      if (imageUpdating == NONE || arrLen == 1)
       {
         imageUpdating = (ImageUpdateType)arr[0];
         startChunkTime = millis();
+
         switch (imageUpdating)
         {
-        case BLACK_WHITE_FAST:
-          Serial.println("fast");            
-          imageBytesToSend = (EPD_HEIGHT * EPD_WIDTH)/8;
+        case BLACK_WHITE_FAST:          
+        case BLACK_WHITE:
           epd.SendCommand(0x24);
+          imageBytesToSend = (EPD_HEIGHT * EPD_WIDTH)/8;
           break;
 
-        case BLACK_WHITE:   
-          imageBytesToSend = (EPD_HEIGHT * EPD_WIDTH)/8;
+        case FOUR_GRAY_REG_ONE:          
           epd.SendCommand(0x24);
+          imageBytesToSend = (EPD_HEIGHT * EPD_WIDTH)/8;
           break;
 
-        case FOUR_GRAY_FAST:
+        case FOUR_GRAY_REG_TWO:          
+          epd.SendCommand(0x26);
+          imageBytesToSend = (EPD_HEIGHT * EPD_WIDTH)/8;
           break;
-        case FOUR_GRAY:          
-          break;
+        case PARTIAL:
+          epd.SendCommand(0x24);
+          imageBytesToSend = (EPD_HEIGHT * EPD_WIDTH)/8;
         
         default:
           break;
@@ -149,6 +161,18 @@ void setupBLE() {
     BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE | BLECharacteristic::PROPERTY_NOTIFY
   );
   bleButton2->addDescriptor(new BLE2902());
+  
+  widthChar = service->createCharacteristic(
+    WIDTH_UUID,
+    BLECharacteristic::PROPERTY_READ
+  );
+  widthChar->setValue(String(EPD_WIDTH).c_str());
+
+  heightChar = service->createCharacteristic(
+    HEIGHT_UUID,
+    BLECharacteristic::PROPERTY_READ
+  );
+  heightChar->setValue(String(EPD_HEIGHT).c_str());
 
   service->start();
   BLEAdvertising *advertising = BLEDevice::getAdvertising();
@@ -227,6 +251,25 @@ void loop()
       Serial.println("BW");
       imageUpdating = NONE;
       epd.TurnOnDisplay(); 
+      break;
+
+    case FOUR_GRAY_REG_ONE:
+      imageUpdating = NONE;
+      Serial.println("REG ONE");
+      break;
+
+    case FOUR_GRAY_REG_TWO:
+      imageUpdating = NONE;
+      Serial.println("GRAYSCALE");
+      epd.Set_4Gray();
+      epd.TurnOnDisplay_4GRAY();
+      break;
+
+    case PARTIAL:
+      //TODO: Not yet tested
+      Serial.println("Partial");
+      imageUpdating = NONE;
+      epd.TurnOnDisplay_Part();
       break;
     
     default:
